@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TrabajadoresPrueba.Helpers;
 using TrabajadoresPrueba.Models;
 
 namespace TrabajadoresPrueba.Controllers
@@ -13,7 +14,7 @@ namespace TrabajadoresPrueba.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Trabajador()
+        public IActionResult Trabajador()
         {
             return View();
         }
@@ -24,25 +25,7 @@ namespace TrabajadoresPrueba.Controllers
                 .FromSqlInterpolated($"EXEC spListarTrabajadores")
                 .AsAsyncEnumerable();
 
-            var listTrabajador = new List<Trabajadore>();
-
-            await foreach (var trabajador in listTrabajadorDTO)
-            {
-                var oTrabajador = new Trabajadore();
-                oTrabajador.Id = trabajador.Id;
-                oTrabajador.Nombres = trabajador.Nombres;
-                oTrabajador.TipoDocumento = trabajador.TipoDocumento;
-                oTrabajador.NumeroDocumento = trabajador.NumeroDocumento;
-                oTrabajador.Sexo = trabajador.Sexo;
-                oTrabajador.IdDepartamentoNavigation = new Departamento();
-                oTrabajador.IdDepartamentoNavigation.NombreDepartamento = trabajador.NombreDepartamento;
-                oTrabajador.IdProvinciaNavigation = new Provincium();
-                oTrabajador.IdProvinciaNavigation.NombreProvincia = trabajador.NombreProvincia;
-                oTrabajador.IdDistritoNavigation = new Distrito();
-                oTrabajador.IdDistritoNavigation.NombreDistrito = trabajador.NombreDistrito;
-
-                listTrabajador.Add(oTrabajador);
-            }
+            var listTrabajador = await new Conversiones().ConvertirTrabajadorDTOATrabajador(listTrabajadorDTO);
 
             return PartialView(listTrabajador);
         }

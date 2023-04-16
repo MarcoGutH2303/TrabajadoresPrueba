@@ -47,6 +47,7 @@ function NuevoTrabajador() {
     CargarDepartamento();
     CargarProvincia(0);
     CargarDistrito(0);
+    inFocusName("nombres", 470);
 }
 
 function GuardarTrabajador() {
@@ -120,8 +121,8 @@ function EditarTrabajador(idTrabajador) {
 function Complemento(idTrabajador) {
     document.getElementById("staticBackdropLabel").innerHTML = "Editar Trabajador";
     setTimeout(recuperarGenericoEspecifico("/Trabajador/RecuperarTrabajador/?idTrabajador=" + idTrabajador,
-        "frmTrabajador", [], false), 200);
-    //inFocusName("nombre", 470);
+        "frmTrabajador", []), 200);
+    inFocusName("nombres", 470);
 }
 
 function EliminarTrabajador(idTrabajador) {

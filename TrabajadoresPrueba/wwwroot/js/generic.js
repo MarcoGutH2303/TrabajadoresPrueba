@@ -58,25 +58,6 @@ function Informacion(titulo = "Información Importante", contenido = "", conteni
     }
 }
 
-function InformacionImportante(titulo = "Información Importante", contenido = "", contenidohtml = "") {
-    if (contenido != "") {
-        Swal.fire({
-            icon: 'info',
-            title: titulo,
-            text: contenido,
-            focusConfirm: true
-        })
-    }
-    else {
-        Swal.fire({
-            icon: 'info',
-            title: titulo,
-            html: contenidohtml,
-            focusConfirm: true
-        })
-    }
-}
-
 
 function set(id, valor) {
     document.getElementById(id).value = valor;
@@ -117,24 +98,13 @@ function LimpiarDatos(idFormulario, excepciones = []) {
     //Limpiar todo
     for (var j = 0; j < radioNames.length; j++) {
         document.querySelectorAll("[name=" + radioNames[j] + "]").forEach(x => x.checked = false);
-
     }
     for (var j = 0; j < radioLimpiar.length; j++) {
         document.getElementById(radioLimpiar[j]).checked = true;
     }
-    var checkboxes = document.querySelectorAll("#" + idFormulario + " [type*='checkbox']")
-    for (var j = 0; j < checkboxes.length; j++) {
-        checkboxes[j].checked = false;
-    }
     for (var i = 0; i < elementos.length; i++) {
-        //Si esta incluido no se hace nada
-
         if (!excepciones.includes(elementos[i].name)) {
-            if (elementos[i].tagName.toUpperCase() == "IMG") {
-                elementos[i].src = "";
-            } else {
-                elementos[i].value = "";
-            }
+            elementos[i].value = "";
         }
     }
 }
@@ -158,111 +128,6 @@ function ValidarLongitudMaxima(idFormulario) {
             else {
                 error = "La longitud actual del campo " + control.name + " es de " + control.value.length + ". El campo " + control.name + " no acepta mas de " + valorMaximo + " caracteres.";
             }
-            return error;
-        }
-    }
-    return error;
-}
-
-function ValidarLongitudMinima(idFormulario) {
-    var error = "";
-    var controles = document.querySelectorAll("#" + idFormulario + " [class*='min-']")
-    var control;
-    for (var i = 0; i < controles.length; i++) {
-        control = controles[i];
-        var arrayClase = control.className.split(" ");
-        var claseMin = arrayClase.filter(p => p.includes("min-"))[0]
-        var valorMinimo = claseMin.replace("min-", "") * 1;
-        if (control.value.length < valorMinimo) {
-            error = "La longitud actual del campo " + control.name + " es de " + control.value.length + "." + "El campo " + control.name + " no acepta menos de " + valorMinimo + " caracteres.";
-            return error;
-        }
-    }
-    return error;
-}
-
-function ValidarObligatorios(idFormulario) {
-    //No hay error
-    var error = "";
-    var elementos = document.querySelectorAll("#" + idFormulario + " .o")
-    var contenedorcheckbox = document.querySelectorAll("#" + idFormulario + " [class*='o-']")
-    for (var j = 0; j < contenedorcheckbox.length; j++) {
-        var contenedor = contenedorcheckbox[j];
-        var arrayClase = contenedor.className.split(" ");
-        var claseMaxima = arrayClase.filter(p => p.includes("o-"))[0];
-        var minimoseleccionable = claseMaxima.replace("o-", "") * 1;
-        var numeroMarcados = 0;
-        var hijos = contenedor.children;
-        var hijo;
-        var nhijos = hijos.length;
-        for (var h = 0; h < nhijos; h++) {
-            hijo = hijos[h];
-            if (hijo.type != undefined && (hijo.type.toUpperCase() == "CHECKBOX" || hijo.type.toUpperCase() == "RADIO")) {
-                if (hijo.checked == true) {
-                    numeroMarcados++;
-                }
-            }
-        }
-        if (minimoseleccionable > numeroMarcados) {
-            if (minimoseleccionable == 1) {
-                error = "Debe seleccionar al menos " + minimoseleccionable + " opción con un check."
-                return error;
-            }
-            else if (minimoseleccionable > 1) {
-                error = "Debe seleccionar al menos " + minimoseleccionable + " opciones con un check."
-                return error;
-            }
-        }
-    }
-    for (var i = 0; i < elementos.length; i++) {
-        //Si esta incluido no se hace nada
-        if (elementos[i].tagName.toUpperCase() == "INPUT" && elementos[i].value == "") {
-            var nombre = elementos[i].name;
-            var la = elementos[i].classList.contains('la');
-            var el = elementos[i].classList.contains('el');
-            var condicional;
-            if (la == true) {
-                condicional = "la";
-            }
-            else if (el == true) {
-                condicional = "el";
-            }
-            else {
-                condicional = " ";
-            }
-            nombre = nombre.replace("_", " ");
-            nombre = nombre.replace(/\b\w/g, l => l.toUpperCase());
-            error = "Debe ingresar " + condicional + " " + nombre;
-            return error;
-        }
-        else if (elementos[i].tagName.toUpperCase() == "SELECT") {
-            if (elementos[i].value == '' || elementos[i].value == '.') {
-                var nombre = elementos[i].name;
-                var un = elementos[i].classList.contains('un');
-                var una = elementos[i].classList.contains('una');
-                var condicional;
-                if (un == true) {
-                    condicional = "un";
-                }
-                else if (una == true) {
-                    condicional = "una";
-                }
-                else {
-                    condicional = " ";
-                }
-                nombre = nombre.replace("_", " ");
-                nombre = nombre.replace("_", " ");
-                nombre = nombre.replace("id", "");
-                nombre = nombre.replace(/\b\w/g, l => l.toUpperCase());
-                error = "Debe seleccionar " + condicional + " " + nombre;
-                return error;
-            }
-        }
-        else if (elementos[i].tagName.toUpperCase() == "IMG" && elementos[i].src == window.location.href) {
-            var nombre = elementos[i].name;
-            nombre = nombre.replace("_", " ");
-            nombre = nombre.replace(/\b\w/g, l => l.toUpperCase());
-            error = "Debe ingresar el/la " + nombre.replace("base64", "").replace("data", "");
             return error;
         }
     }
@@ -310,7 +175,7 @@ function fetchPostText(url, frm, callback) {
         })
 }
 
-function recuperarGenericoEspecifico(url, idFormulario, excepciones = [], adicional = false) {
+function recuperarGenericoEspecifico(url, idFormulario, excepciones = []) {
     var elementos = document.querySelectorAll("#" + idFormulario + " [name]")
     var nombreName;
     fetchGet(url, function (res) {
@@ -320,43 +185,10 @@ function recuperarGenericoEspecifico(url, idFormulario, excepciones = [], adicio
                 if (elementos[i].type != undefined && elementos[i].type.toUpperCase() == "RADIO") {
                     setC("[type='radio'][name='" + nombreName + "'][value='" + res[nombreName] + "']")
                 }
-                else if (elementos[i].type != undefined && elementos[i].type.toUpperCase() == "CHECKBOX") {
-                    //RECUPERAMOS
-                    var propiedad = nombreName.replace("[]", "");
-                    var valores = res[propiedad];
-                    var valor;
-                    for (var k = 0; k < valores.length; k++) {
-                        valor = valores[k];
-                        setC("[type='checkbox'][value='" + valor + "']")
-                    }
-                }
                 else {
-                    if (elementos[i].type != undefined && elementos[i].type.toUpperCase() != "FILE") {
-                        if (elementos[i].type != undefined && elementos[i].type.toUpperCase() == "DATE") {
-                            var fecha = fixFecha(res[nombreName]);
-                            setN(nombreName, fecha)
-                        }
-                        else if (elementos[i].type != undefined && elementos[i].type.toUpperCase() == "DATETIME-LOCAL") {
-                            var fecha = fixFechaHora(res[nombreName]);
-                            setN(nombreName, fecha)
-                        }
-                        else {
-                            setN(nombreName, res[nombreName])
-                        }
-                    }
-                    else if (elementos[i].tagName.toUpperCase() == "IMG") {
-                        if (res[nombreName] != null) {
-                            setSRC(nombreName, res[nombreName]);
-                        }
-                        else {
-                            setSRC(nombreName, "");
-                        }
-                    }
+                    setN(nombreName, res[nombreName]);
                 }
             }
-        }
-        if (adicional == true) {
-            recuperarEspecifico(res);
         }
     });
 }
@@ -372,10 +204,6 @@ function llenarCombo(data, id, propiedadMostrar, propiedadId, valueDefecto = "")
     }
     contenido += "";
     document.getElementById(id).innerHTML = contenido;
-}
-
-function inFocus(id, time) {
-    setTimeout(function () { $("#" + id).focus(); }, time);
 }
 
 function inFocusName(name, time) {

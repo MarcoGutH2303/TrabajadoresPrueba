@@ -3,14 +3,27 @@
 <table id="tblTrabajador" class="display table table-bordered cell-border table-hover pt-2 ml-2 table-responsive">
     <thead class="thead-degrad">
         <tr>
-            <th>Id</th>
-            <th>T. Documento</th>
-            <th>N° Documento</th>
-            <th>Nombres</th>
-            <th>Sexo</th>
-            <th>Departamento</th>
-            <th>Provincia</th>
-            <th>Distrito</th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoDocumento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroDocumento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombres)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sexo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdDepartamentoNavigation.NombreDepartamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdProvinciaNavigation.NombreProvincia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdDistritoNavigation.NombreDistrito)
+            </th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -26,9 +39,6 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.TipoDocumento)
                 </td>
@@ -51,8 +61,8 @@
                     @Html.DisplayFor(modelItem => item.IdDistritoNavigation.NombreDistrito)
                 </td>
                 <td>
-                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="EditarTrabajador(@item.Id)">Edit</button>&nbsp;
-                    <button class="btn btn-danger" onclick="EliminarTrabajador(@item.Id)">Delete</button>
+                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="EditarTrabajador(@item.Id)">Editar</button>&nbsp;
+                    <button class="btn btn-danger" onclick="EliminarTrabajador(@item.Id)">Eliminar</button>
                 </td>
             </tr>
         }
