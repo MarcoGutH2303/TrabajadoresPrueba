@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewData["Title"] = "Trabajador";
+}
+
+<h3 class="text-center pb-2">Registro De Trabajadores</h3>
+
+<div class="shadow">
+    <div class="form-group row px-3 pt-3">
+        <div class="col-md-8">
+            <button type="button" class="btn btn-outline-primary d-block" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="NuevoTrabajador()">Nuevo Trabajador</button>
+        </div>
+    </div>
+    <div class="row p-3 ">
+        <div id="divTrabajador" class="table-responsive-md">
+        </div>
+    </div>
+</div>
+
+<!-- Modal Trabajador-->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Registro De Trabajador</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="frmTrabajador" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Nombres</label>&nbsp;<label style="color: red">(*)</label>
+                            <input type="text" name="nombres" class="form-control o max-500" />
+                            <input type="text" name="id" id="id" hidden class="form-control" />
+                        </div>
+                        <div class="col-md-3">
+                            <label>Tipo Documento</label>&nbsp;<label style="color: red">(*)</label>
+                            <select name="tipoDocumento" class="form-control o" id="cboTipoDocumento">
+                                <option value="" selected="selected">-- Seleccione --</option>
+                                <option value="DNI">DNI</option>
+                                <option value="RUC">RUC</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>N° Documento</label>&nbsp;<label style="color: red">(*)</label>
+                            <input type="text" name="numeroDocumento" class="form-control o max-50" />
+                        </div>
+                        <div class="col-md-3">
+                            <label>Sexo</label>&nbsp;<label style="color: red">(*)</label>
+                            <select name="sexo" class="form-control o" id="cboSexo">
+                                <option value="" selected="selected">-- Seleccione --</option>
+                                <option value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Departamento</label>&nbsp;<label style="color: red">(*)</label>
+                            <select name="idDepartamento" class="form-control o" id="cboDepartamento" onchange="ochDepartamento()">
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Provincia</label>&nbsp;<label style="color: red">(*)</label>
+                            <select name="idProvincia" class="form-control o" id="cboProvincia" onchange="ochProvincia()">
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Distrito</label>&nbsp;<label style="color: red">(*)</label>
+                            <select name="idDistrito" class="form-control o" id="cboDistrito">
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnCerrarTrabajador" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" id="btnGuardarTrabajador" class="btn btn-primary" onclick="GuardarTrabajador()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/sweetalert.js"></script>
+    <script src="~/js/generic.js" asp-append-version="true"></script>
+    <script src="~/js/Trabajador.js"></script>
+}

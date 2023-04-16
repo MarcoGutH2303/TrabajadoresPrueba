@@ -1,0 +1,87 @@
+﻿@model IEnumerable<TrabajadoresPrueba.Models.Trabajadore>
+
+<table id="tblBandejaTrabajador" class="display table table-bordered cell-border table-hover pt-2 ml-2 table-responsive">
+    <thead class="thead-degrad">
+        <tr>
+            <th>Id</th>
+            <th>T. Documento</th>
+            <th>N° Documento</th>
+            <th>Nombres</th>
+            <th>Sexo</th>
+            <th>Departamento</th>
+            <th>Provincia</th>
+            <th>Distrito</th>
+        </tr>
+    </thead>
+    <tbody class="tbody-style">
+        @if (Model.Count() == 0)
+        {
+            <tr class="fw-bold p-3">
+                <td colspan="9" class="text-center">
+                    No hay registros
+                </td>
+            </tr>
+        }
+        @foreach (var item in Model)
+        {
+            @if (item.Sexo == "M")
+            {
+                <tr style="background-color: cornflowerblue">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoDocumento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumeroDocumento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombres)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sexo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdDepartamentoNavigation.NombreDepartamento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdProvinciaNavigation.NombreProvincia)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdDistritoNavigation.NombreDistrito)
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <tr style="background-color: orange">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoDocumento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumeroDocumento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombres)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sexo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdDepartamentoNavigation.NombreDepartamento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdProvinciaNavigation.NombreProvincia)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdDistritoNavigation.NombreDistrito)
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
